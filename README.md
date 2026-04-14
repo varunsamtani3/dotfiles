@@ -72,7 +72,13 @@ git config --global user.email "varunsamtani3@gmail.com"
 git config --global credential.helper osxkeychain
 ```
 
-### 7. Set up GitHub MCP for Claude Code
+### 7. Install Claude Code
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+### 8. Set up GitHub MCP for Claude Code
 
 ```bash
 claude mcp add github -e GITHUB_PERSONAL_ACCESS_TOKEN=<token> -- npx -y @modelcontextprotocol/server-github
