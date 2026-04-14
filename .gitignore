@@ -16,7 +16,6 @@ venv/
 env/
 
 # uv
-.python-version
 
 # Jupyter
 .ipynb_checkpoints/
