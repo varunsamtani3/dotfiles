@@ -20,7 +20,7 @@ Personal dotfiles for macOS — shell config, Python/ML environment setup, and d
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Install core tools
-brew install bash bash-completion@2 fzf starship direnv
+brew install bash bash-completion@2 fzf starship direnv node
 
 # Install uv (standalone, not via conda)
 curl -LsSf https://astral.sh/uv/install.sh | sh
