@@ -1,0 +1,19 @@
+# layout uv — creates + activates a uv-managed .venv automatically
+# Usage: add `layout uv` to any project's .envrc
+layout_uv() {
+    if [[ ! -d .venv ]]; then
+        log_status "No .venv found. Running \`uv venv\`..."
+        uv venv
+    fi
+    source .venv/bin/activate
+    export UV_ACTIVE=1
+
+    # Auto-register venv as a Jupyter kernel named after the project dir
+    local kernel_name
+    kernel_name=$(basename "$PWD")
+    if ! jupyter kernelspec list 2>/dev/null | grep -q "^  ${kernel_name} "; then
+        log_status "Registering Jupyter kernel '${kernel_name}'..."
+        uv pip install -q ipykernel
+        python -m ipykernel install --user --name "${kernel_name}" --display-name "${kernel_name}"
+    fi
+}
