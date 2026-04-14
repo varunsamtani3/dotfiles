@@ -4,9 +4,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # uv
 export PATH="/Users/varun/.local/bin:$PATH"
 
-# Added by Windsurf
-export PATH="/Users/varun/.codeium/windsurf/bin:$PATH"
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/varun/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
