@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# uv
+.python-version
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb output stripped by nbstripout
+
+# ML / data
+*.csv
+*.parquet
+*.arrow
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+data/
+datasets/
+models/
+checkpoints/
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# Secrets / env vars
+.env
+.envrc.local
+*.key
+*.pem
+
+# Claude Code (local permissions/settings are machine-specific)
+.claude/
+
+# macOS
+.DS_Store
+.AppleDouble
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
