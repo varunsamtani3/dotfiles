@@ -24,8 +24,9 @@ $python\
 $docker_context\
 $conda\
 $pixi\
-[](fg:color_bg3 bg:color_bg1)\
+[](fg:color_bg3 bg:color_purple)\
 $cmd_duration\
+[](fg:color_purple bg:color_bg1)\
 $time\
 [ ](fg:color_bg1)\
 $line_break$character"""
@@ -165,8 +166,8 @@ format = '[[ $symbol( $version)( $environment) ](fg:color_fg0 bg:color_bg3)]($st
 
 [cmd_duration]
 min_time = 3000
-style = "bg:color_bg1"
-format = '[[ ⏱ $duration ](fg:color_fg0 bg:color_bg1)]($style)'
+style = "bg:color_purple"
+format = '[[ ⏱ $duration ](fg:color_fg0 bg:color_purple)]($style)'
 
 [time]
 disabled = false
