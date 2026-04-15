@@ -24,9 +24,8 @@ $python\
 $docker_context\
 $conda\
 $pixi\
-[](fg:color_bg3 bg:color_purple)\
+[](fg:color_bg3 bg:color_bg1)\
 $cmd_duration\
-[](fg:color_purple bg:color_bg1)\
 $time\
 [ ](fg:color_bg1)\
 $line_break$character"""
