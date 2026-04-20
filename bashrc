@@ -24,13 +24,20 @@ alias gp='git push'
 alias gl='git pull'
 
 # ─── Aliases — Python / uv ────────────────────────────────────────────────────
+# Pinned to 3.13 — Homebrew python3 symlink tracks the latest (currently 3.14)
+alias python='/opt/homebrew/bin/python3.13'
+alias python3='/opt/homebrew/bin/python3.13'
+alias pip='/opt/homebrew/bin/pip3.13'
+alias pip3='/opt/homebrew/bin/pip3.13'
 alias py='python'
 alias venv='uv venv'          # create a new venv: venv .venv
 alias pipi='uv pip install'   # fast package install
+# Global CLI tools → pipx install <tool>  (e.g. pipx install black)
 
 # ─── Aliases — System ─────────────────────────────────────────────────────────
 alias clr='clear'
 alias ut='uptime'
+alias brewup='brew update && brew upgrade && brew cleanup'
 
 # ─── fzf — Fuzzy finder ───────────────────────────────────────────────────────
 # Ctrl+R  → fuzzy history search
