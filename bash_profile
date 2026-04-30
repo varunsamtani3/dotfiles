@@ -22,3 +22,7 @@ unset __conda_setup
 # Source ~/.bashrc for interactive settings (aliases, prompt, completions, fzf)
 # Note: Mac terminals open login shells, so .bashrc must be sourced explicitly
 [[ -f ~/.bashrc ]] && source ~/.bashrc
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
