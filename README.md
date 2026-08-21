@@ -6,10 +6,10 @@ Personal dotfiles for macOS — shell config, Python/ML environment setup, and d
 
 | File | Symlink target | Purpose |
 |------|---------------|---------|
-| `bash_profile` | `~/.bash_profile` | Login shell: PATH, Homebrew, conda init, sources bashrc |
+| `bash_profile` | `~/.bash_profile` | Login shell: PATH, Homebrew, sources bashrc |
 | `bashrc` | `~/.bashrc` | Interactive shell: aliases, history, fzf, starship, direnv |
-| `condarc` | `~/.condarc` | conda config: conda-forge channel, auto-activate disabled |
 | `direnvrc` | `~/.config/direnv/direnvrc` | Global direnv layout: uv venv + Jupyter kernel auto-registration |
+| `direnv-config.toml` | `~/.config/direnv/config.toml` | Whitelist: auto-allows `.envrc` under `~/workspace` |
 
 ## Fresh machine setup
 
@@ -20,13 +20,13 @@ Personal dotfiles for macOS — shell config, Python/ML environment setup, and d
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Install core tools
-brew install bash bash-completion@2 fzf starship direnv node
+brew install bash bash-completion@2 fzf starship direnv node ripgrep fd bat eza zoxide tldr
 
-# Install uv (standalone, not via conda)
+# Install uv (standalone)
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Install Miniconda (for existing llm env / heavy ML deps)
-# Download from https://docs.conda.io/en/latest/miniconda.html
+# Install uv-managed Python as the global default (~/.local/bin shims)
+uv python install 3.13 --default
 ```
 
 ### 2. Switch to Homebrew bash
@@ -44,9 +44,9 @@ cd ~/workspace/mac_utils
 
 ln -s "$PWD/bash_profile" ~/.bash_profile
 ln -s "$PWD/bashrc" ~/.bashrc
-ln -s "$PWD/condarc" ~/.condarc
 mkdir -p ~/.config/direnv
 ln -s "$PWD/direnvrc" ~/.config/direnv/direnvrc
+ln -s "$PWD/direnv-config.toml" ~/.config/direnv/config.toml
 ```
 
 ### 4. Install global uv tools
@@ -57,12 +57,9 @@ uv tool install ipython
 uv tool install ruff
 ```
 
-### 5. Restore the llm conda environment (optional)
+### 5. (Removed) llm conda environment
 
-```bash
-conda activate llm
-pip install anthropic openai litellm mlflow polars duckdb chromadb nbstripout
-```
+The Miniconda `llm` env was removed in favor of uv. Its full package list is preserved in `conda-llm-env-backup.txt` in this repo if anything needs reinstalling.
 
 ### 6. Configure git
 
@@ -111,6 +108,7 @@ direnv will automatically:
 | `Ctrl+R` | Fuzzy history search (fzf) |
 | `Ctrl+T` | Fuzzy file insert (fzf) |
 | `Alt+C` | Fuzzy cd into subdirectory (fzf) |
+| `z <name>` | Jump to frequently used directory (zoxide) |
 
 ### Key aliases
 
@@ -118,21 +116,19 @@ direnv will automatically:
 gs        # git status
 gd        # git diff
 glog      # git log --oneline --graph --decorate --all
-ll        # ls -lhF
-la        # ls -lahF
+ll        # eza -lh --git --icons=auto
+la        # eza -lha --git --icons=auto
 venv      # uv venv
 pipi      # uv pip install
-py        # python
 ```
 
 ---
 
 ## Stack
 
-- **Shell**: bash 5.x (Homebrew), starship prompt
-- **Python manager**: uv (project envs) + Miniconda (llm env)
+- **Shell**: bash 5.x (Homebrew), starship prompt, Ghostty terminal
+- **Python manager**: uv — project envs via direnv, global shims via `uv python install --default`
 - **Default Python**: 3.13
-- **ML env**: `conda activate llm` — transformers, HuggingFace, PyTorch, Jupyter
 - **Experiment tracking**: MLflow
 - **Data tools**: polars, duckdb
 - **LLM clients**: anthropic, openai, litellm

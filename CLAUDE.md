@@ -17,7 +17,6 @@ macOS dotfiles and shell config repo. Files edited directly — no symlink manag
 | `starship.toml` | Starship prompt config |
 | `direnvrc` | Global direnv hooks — loaded by all `.envrc` files |
 | `.envrc` | Per-dir env activation via direnv |
-| `condarc` | Conda channel/solver config |
 
 **Edit → test workflow:**
 ```bash
@@ -29,8 +28,8 @@ direnv allow             # after editing .envrc
 **Gotchas:**
 - Starship node version display disabled — causes timeout. Don't re-enable without `command_timeout` set.
 - `bash_profile` sources `bashrc`. Avoid duplicating logic between them.
-- bun in PATH must come after nvm/conda in `bash_profile` to avoid override conflicts.
-- Python 3.13 is default (`uv`-managed). Conda kept for legacy envs only.
+- bun is prepended to PATH after `.bashrc` sourcing — keep that line last in `bash_profile`.
+- Python 3.13 is default (`uv`-managed via `~/.local/bin` shims). No conda.
 
 ---
 

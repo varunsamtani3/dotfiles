@@ -2,15 +2,17 @@
 export HISTSIZE=100000
 export HISTFILESIZE=100000
 export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+export HISTTIMEFORMAT='%F %T '           # timestamps in history output
 shopt -s histappend                      # append rather than overwrite history
+shopt -s checkwinsize cdspell dirspell histverify   # resize fix, typo-tolerant cd, confirm history edits
 
 # ─── Editor ───────────────────────────────────────────────────────────────────
 export EDITOR="vim"
 export VISUAL="$EDITOR"
 
 # ─── Aliases — Navigation ─────────────────────────────────────────────────────
-alias ll='ls -lhF'
-alias la='ls -lahF'
+alias ll='eza -lh --git --icons=auto'
+alias la='eza -lha --git --icons=auto'
 alias ..='cd ..'
 alias ...='cd ../..'
 
@@ -24,15 +26,10 @@ alias gp='git push'
 alias gl='git pull'
 
 # ─── Aliases — Python / uv ────────────────────────────────────────────────────
-# Pinned to 3.13 — Homebrew python3 symlink tracks the latest (currently 3.14)
-alias python='/opt/homebrew/bin/python3.13'
-alias python3='/opt/homebrew/bin/python3.13'
-alias pip='/opt/homebrew/bin/pip3.13'
-alias pip3='/opt/homebrew/bin/pip3.13'
-alias py='python'
+# Global python/pip resolve via uv-managed shims in ~/.local/bin (first on PATH)
 alias venv='uv venv'          # create a new venv: venv .venv
 alias pipi='uv pip install'   # fast package install
-# Global CLI tools → pipx install <tool>  (e.g. pipx install black)
+# Global CLI tools → uv tool install <tool>  (e.g. uv tool install ruff)
 
 # ─── Aliases — System ─────────────────────────────────────────────────────────
 alias clr='clear'
@@ -45,6 +42,9 @@ alias brewup='brew update && brew upgrade && brew cleanup'
 # Alt+C   → fuzzy cd
 eval "$(fzf --bash)"
 
+# ─── zoxide — Smarter cd that learns frequent dirs ─────────────────────────────
+eval "$(zoxide init bash)"   # usage: z <partial-dir-name>
+
 # ─── direnv — Per-project env vars (.envrc files) ─────────────────────────────
 eval "$(direnv hook bash)"
 
@@ -54,3 +54,8 @@ eval "$(starship init bash)"
 # ─── bash-completion@2 ────────────────────────────────────────────────────────
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && \
     . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+
+# ─── Readline — friendlier tab completion ──────────────────────────────────────
+bind 'set completion-ignore-case on'    # Tab ignores case
+bind 'set show-all-if-ambiguous on'     # single Tab lists all matches
+bind 'set colored-stats on'             # colorize completion listings

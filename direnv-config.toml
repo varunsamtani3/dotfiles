@@ -1,0 +1,3 @@
+# Auto-allow .envrc files under these paths — no manual `direnv allow` needed
+[whitelist]
+prefix = [ "/Users/varun/workspace" ]
