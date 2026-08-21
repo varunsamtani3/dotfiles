@@ -1,0 +1,16 @@
+# Shell — Homebrew bash 5, login mode so ~/.bash_profile loads
+command = /opt/homebrew/bin/bash --login
+
+# Font — Nerd Font build required for starship/fzf glyphs
+font-family = FiraCode Nerd Font
+font-size = 13
+
+# Theme — matches starship gruvbox_dark palette
+theme = Gruvbox Dark
+
+# Transparency + macOS frosted blur behind the window
+background-opacity = 0.92
+background-blur-radius = 20
+
+# Send Option as Alt (required for fzf Alt+C)
+macos-option-as-alt = true

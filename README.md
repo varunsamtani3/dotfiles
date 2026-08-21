@@ -10,6 +10,7 @@ Personal dotfiles for macOS — shell config, Python/ML environment setup, and d
 | `bashrc` | `~/.bashrc` | Interactive shell: aliases, history, fzf, starship, direnv |
 | `direnvrc` | `~/.config/direnv/direnvrc` | Global direnv layout: uv venv + Jupyter kernel auto-registration |
 | `direnv-config.toml` | `~/.config/direnv/config.toml` | Whitelist: auto-allows `.envrc` under `~/workspace` |
+| `ghostty-config` | `~/.config/ghostty/config` | Ghostty terminal: bash 5 login shell, FiraCode Nerd Font, Gruvbox Dark, transparency |
 
 ## Fresh machine setup
 
@@ -21,6 +22,7 @@ Personal dotfiles for macOS — shell config, Python/ML environment setup, and d
 
 # Install core tools
 brew install bash bash-completion@2 fzf starship direnv node ripgrep fd bat eza zoxide tldr
+brew install --cask ghostty
 
 # Install uv (standalone)
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -47,6 +49,8 @@ ln -s "$PWD/bashrc" ~/.bashrc
 mkdir -p ~/.config/direnv
 ln -s "$PWD/direnvrc" ~/.config/direnv/direnvrc
 ln -s "$PWD/direnv-config.toml" ~/.config/direnv/config.toml
+mkdir -p ~/.config/ghostty
+ln -s "$PWD/ghostty-config" ~/.config/ghostty/config
 ```
 
 ### 4. Install global uv tools
