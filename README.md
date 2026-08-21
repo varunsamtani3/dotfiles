@@ -11,6 +11,9 @@ Personal dotfiles for macOS — shell config, Python/ML environment setup, and d
 | `direnvrc` | `~/.config/direnv/direnvrc` | Global direnv layout: uv venv + Jupyter kernel auto-registration |
 | `direnv-config.toml` | `~/.config/direnv/config.toml` | Whitelist: auto-allows `.envrc` under `~/workspace` |
 | `ghostty-config` | `~/.config/ghostty/config` | Ghostty terminal: bash 5 login shell, FiraCode Nerd Font, Gruvbox Dark, transparency |
+| `agents-global.md` | `~/.claude/CLAUDE.md`, `~/.config/opencode/AGENTS.md` | Universal behavioral guidelines shared by all AI coding tools |
+
+`AGENTS.md` (project context for AI tools in this repo) and `CLAUDE.md` (one-line `@AGENTS.md` import stub) are repo-local and not symlinked.
 
 ## Fresh machine setup
 
