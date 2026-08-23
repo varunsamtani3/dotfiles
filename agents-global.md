@@ -128,3 +128,15 @@ When compacting this conversation, always preserve:
 - Test results, error messages, and blockers
 - User preferences expressed in this session
 - After /clear or idle prompt: use /compact not /clear (preserves Smart Compaction checkpoints)
+
+## 11. Obsidian Second Brain
+
+The user keeps a second brain vault at `$OBSIDIAN_VAULT_PATH` (default `~/Documents/SecondBrain`), managed by obsidian-second-brain Agent Skills installed at `~/.agents/skills/`.
+
+When working with the vault, or when the user asks to save/capture/log/research/remember something:
+
+1. Resolve the vault root: `$OBSIDIAN_VAULT_PATH` if set, else `~/Documents/SecondBrain`.
+2. Read `_CLAUDE.md` at the vault root first, if present, for vault conventions.
+3. Prefer the installed `~/.agents/skills/obsidian-*` skills for vault actions (save, capture, log, decide, research, health, ...).
+4. Treat the AI-first vault rule as non-negotiable for every note written into the vault: `## For future agent` preamble, rich frontmatter (`type`, `date`, `tags`, `ai-first: true`), `[[wikilinks]]` for every person/project/concept, recency markers per external claim, sources verbatim, confidence levels where applicable. Full spec: `~/.agents/skills/obsidian-core/references/ai-first-rules.md`. If unreadable, say so before writing rather than guessing.
+5. Do not write vault notes without following the AI-first spec above; do not strip frontmatter or preambles from existing vault notes.

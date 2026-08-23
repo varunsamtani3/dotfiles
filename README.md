@@ -11,7 +11,7 @@ Personal dotfiles for macOS — shell config, Python/ML environment setup, and d
 | `direnvrc` | `~/.config/direnv/direnvrc` | Global direnv layout: uv venv + Jupyter kernel auto-registration |
 | `direnv-config.toml` | `~/.config/direnv/config.toml` | Whitelist: auto-allows `.envrc` under `~/workspace` |
 | `ghostty-config` | `~/.config/ghostty/config` | Ghostty terminal: bash 5 login shell, FiraCode Nerd Font, Gruvbox Dark, transparency |
-| `agents-global.md` | `~/.claude/CLAUDE.md`, `~/.config/opencode/AGENTS.md` | Universal behavioral guidelines shared by all AI coding tools |
+| `agents-global.md` | `~/.claude/CLAUDE.md`, `~/.config/opencode/AGENTS.md` | Universal behavioral guidelines shared by all AI coding tools (imports `@RTK.md`) |
 
 `AGENTS.md` (project context for AI tools in this repo) and `CLAUDE.md` (one-line `@AGENTS.md` import stub) are repo-local and not symlinked.
 
@@ -24,7 +24,7 @@ Personal dotfiles for macOS — shell config, Python/ML environment setup, and d
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Install core tools
-brew install bash bash-completion@2 fzf starship direnv node ripgrep fd bat eza zoxide tldr
+brew install bash bash-completion@2 fzf starship direnv node ripgrep fd bat eza zoxide tldr rtk ast-grep
 brew install --cask ghostty
 
 # Install uv (standalone)
@@ -62,6 +62,7 @@ ln -s "$PWD/ghostty-config" ~/.config/ghostty/config
 uv tool install jupyterlab   # required for Jupyter kernel auto-registration in direnvrc
 uv tool install ipython
 uv tool install ruff
+uv tool install gitingest    # packs a repo into a single LLM-ready text block
 ```
 
 ### 5. (Removed) llm conda environment
@@ -82,7 +83,33 @@ git config --global credential.helper osxkeychain
 npm install -g @anthropic-ai/claude-code
 ```
 
-### 8. Set up GitHub MCP for Claude Code
+### 8. Set up AI token optimization (rtk)
+
+`rtk` is a CLI proxy that filters/summarizes command output before it reaches LLM context (60-90% savings). The Claude Code PreToolUse hook and the opencode plugin transparently rewrite commands (`git status` -> `rtk git status`).
+
+```bash
+# Claude Code: hook + ~/.claude/RTK.md + settings.json patch
+rtk init -g --auto-patch
+
+# OpenCode: plugin at ~/.config/opencode/plugins/rtk.ts
+rtk init -g --opencode
+
+# Share one RTK.md between both tools (agents-global.md imports it via @RTK.md)
+ln -s ~/.claude/RTK.md ~/.config/opencode/RTK.md
+
+# Spend analytics for `rtk cc-economics` (pinned: rtk's parser needs the v15 schema)
+bun install -g ccusage@15
+```
+
+Useful commands:
+
+```bash
+rtk gain              # token savings dashboard
+rtk discover          # find missed rtk opportunities in Claude Code history
+rtk cc-economics      # spend (ccusage) vs savings (rtk)
+```
+
+### 9. Set up GitHub MCP for Claude Code
 
 ```bash
 claude mcp add github -e GITHUB_PERSONAL_ACCESS_TOKEN=<token> -- npx -y @modelcontextprotocol/server-github
@@ -140,3 +167,4 @@ pipi      # uv pip install
 - **Data tools**: polars, duckdb
 - **LLM clients**: anthropic, openai, litellm
 - **Code quality**: ruff
+- **AI token optimization**: rtk proxy (Claude Code + opencode), ccusage analytics, ast-grep, gitingest

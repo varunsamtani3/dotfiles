@@ -11,3 +11,6 @@ export PATH="/Users/varun/.local/bin:$PATH"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Obsidian second brain vault (used by obsidian-second-brain agent skills)
+export OBSIDIAN_VAULT_PATH="$HOME/Documents/SecondBrain"
