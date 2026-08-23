@@ -14,3 +14,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Obsidian second brain vault (used by obsidian-second-brain agent skills)
 export OBSIDIAN_VAULT_PATH="$HOME/Documents/SecondBrain"
+
+# opencode: never read Claude Code fallback paths (~/.claude/*)
+export OPENCODE_DISABLE_CLAUDE_CODE=1

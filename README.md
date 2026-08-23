@@ -11,9 +11,11 @@ Personal dotfiles for macOS — shell config, Python/ML environment setup, and d
 | `direnvrc` | `~/.config/direnv/direnvrc` | Global direnv layout: uv venv + Jupyter kernel auto-registration |
 | `direnv-config.toml` | `~/.config/direnv/config.toml` | Whitelist: auto-allows `.envrc` under `~/workspace` |
 | `ghostty-config` | `~/.config/ghostty/config` | Ghostty terminal: bash 5 login shell, FiraCode Nerd Font, Gruvbox Dark, transparency |
-| `agents-global.md` | `~/.claude/CLAUDE.md`, `~/.config/opencode/AGENTS.md` | Universal behavioral guidelines shared by all AI coding tools (imports `@RTK.md`) |
+| `agents-global.md` | `~/.config/opencode/AGENTS.md` | Behavioral guidelines loaded into every opencode session |
+| `RTK.md` | `~/.config/opencode/RTK.md` | rtk proxy reference (loaded via `opencode.jsonc` instructions) |
+| `opencode.jsonc` | `~/.config/opencode/opencode.jsonc` | opencode config: instruction files, MCP servers |
 
-`AGENTS.md` (project context for AI tools in this repo) and `CLAUDE.md` (one-line `@AGENTS.md` import stub) are repo-local and not symlinked.
+`AGENTS.md` is repo-local project context for AI tools working in this repo.
 
 ## Fresh machine setup
 
@@ -54,6 +56,10 @@ ln -s "$PWD/direnvrc" ~/.config/direnv/direnvrc
 ln -s "$PWD/direnv-config.toml" ~/.config/direnv/config.toml
 mkdir -p ~/.config/ghostty
 ln -s "$PWD/ghostty-config" ~/.config/ghostty/config
+mkdir -p ~/.config/opencode/plugins
+ln -s "$PWD/agents-global.md" ~/.config/opencode/AGENTS.md
+ln -s "$PWD/RTK.md" ~/.config/opencode/RTK.md
+ln -s "$PWD/opencode.jsonc" ~/.config/opencode/opencode.jsonc
 ```
 
 ### 4. Install global uv tools
@@ -77,43 +83,34 @@ git config --global user.email "varunsamtani3@gmail.com"
 git config --global credential.helper osxkeychain
 ```
 
-### 7. Install Claude Code
+### 7. Set up AI token optimization (rtk)
+
+`rtk` is a CLI proxy that filters/summarizes command output before it reaches LLM context (60-90% savings). The opencode plugin at `~/.config/opencode/plugins/rtk.ts` transparently rewrites commands (`git status` -> `rtk git status`) — zero token overhead.
 
 ```bash
-npm install -g @anthropic-ai/claude-code
-```
-
-### 8. Set up AI token optimization (rtk)
-
-`rtk` is a CLI proxy that filters/summarizes command output before it reaches LLM context (60-90% savings). The Claude Code PreToolUse hook and the opencode plugin transparently rewrite commands (`git status` -> `rtk git status`).
-
-```bash
-# Claude Code: hook + ~/.claude/RTK.md + settings.json patch
-rtk init -g --auto-patch
-
-# OpenCode: plugin at ~/.config/opencode/plugins/rtk.ts
+# Installs the opencode plugin
 rtk init -g --opencode
 
-# Share one RTK.md between both tools (agents-global.md imports it via @RTK.md)
-ln -s ~/.claude/RTK.md ~/.config/opencode/RTK.md
-
-# Spend analytics for `rtk cc-economics` (pinned: rtk's parser needs the v15 schema)
-bun install -g ccusage@15
+# RTK.md and opencode.jsonc are already symlinked from step 3;
+# RTK.md is loaded into every session via the instructions array in opencode.jsonc
 ```
 
 Useful commands:
 
 ```bash
 rtk gain              # token savings dashboard
-rtk discover          # find missed rtk opportunities in Claude Code history
-rtk cc-economics      # spend (ccusage) vs savings (rtk)
+rtk proxy <cmd>       # run a command without rtk filtering (debugging)
 ```
 
-### 9. Set up GitHub MCP for Claude Code
+### 8. Set up GitHub MCP for opencode
+
+Already wired in `opencode.jsonc` (disabled by default). To enable, export a token and flip `enabled` to `true`:
 
 ```bash
-claude mcp add github -e GITHUB_PERSONAL_ACCESS_TOKEN=<token> -- npx -y @modelcontextprotocol/server-github
+export GITHUB_PERSONAL_ACCESS_TOKEN=<token>   # e.g. in bash_profile
 ```
+
+Verify with `opencode mcp list`.
 
 ---
 
@@ -167,4 +164,4 @@ pipi      # uv pip install
 - **Data tools**: polars, duckdb
 - **LLM clients**: anthropic, openai, litellm
 - **Code quality**: ruff
-- **AI token optimization**: rtk proxy (Claude Code + opencode), ccusage analytics, ast-grep, gitingest
+- **AI token optimization**: rtk proxy via opencode plugin, ast-grep, gitingest

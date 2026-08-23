@@ -48,7 +48,7 @@ mlartifacts/
 *.key
 *.pem
 
-# Claude Code (local permissions/settings are machine-specific)
+# AI tool local dirs (machine-specific)
 .claude/
 
 # macOS

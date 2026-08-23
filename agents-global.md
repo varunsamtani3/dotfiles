@@ -1,6 +1,6 @@
 # Behavioral Guidelines
 
-Universal guidelines for AI coding agents. Symlinked into each tool's global config path (Claude Code: `~/.claude/CLAUDE.md`, opencode: `~/.config/opencode/AGENTS.md`).
+Universal guidelines for AI coding agents. Symlinked into the global config path (`~/.config/opencode/AGENTS.md`).
 
 Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
 
@@ -92,12 +92,12 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 **Pick cheapest model that can do the job.**
 
-- **Haiku**: bulk mechanical work — file enumeration, grep, format conversion, boilerplate generation. No judgment required.
-- **Sonnet**: scoped research, code exploration, synthesis, most coding tasks.
-- **Opus**: only when real planning, tradeoffs, or multi-step reasoning is genuinely required.
+- **Cheap/fast model**: bulk mechanical work — file enumeration, grep, format conversion, boilerplate generation. No judgment required.
+- **Mid-tier model**: scoped research, code exploration, synthesis, most coding tasks.
+- **Frontier model**: only when real planning, tradeoffs, or multi-step reasoning is genuinely required.
 
 Rules for subagents:
-- Haiku subagents never spawn further subagents. If one needs to, the task was wrong-sized — return to parent.
+- Cheap-model subagents never spawn further subagents. If one needs to, the task was wrong-sized — return to parent.
 - Max spawn depth: 2 (parent → subagent → one more tier).
 - If a subagent realizes it needs a smarter model, return to parent rather than escalating independently.
 
@@ -118,8 +118,6 @@ Rules for subagents:
 - Natural language characters (accented letters, CJK, etc.) are fine when content requires them.
 - Code output must be copy-paste safe — no curly quotes, no fancy dashes inside code blocks.
 
-@RTK.md
-
 ## 10. Compact Instructions
 
 When compacting this conversation, always preserve:
@@ -127,7 +125,7 @@ When compacting this conversation, always preserve:
 - Active decisions and constraints made this session
 - Test results, error messages, and blockers
 - User preferences expressed in this session
-- After /clear or idle prompt: use /compact not /clear (preserves Smart Compaction checkpoints)
+- Prefer compacting over clearing when context runs low
 
 ## 11. Obsidian Second Brain
 
