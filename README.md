@@ -71,11 +71,7 @@ uv tool install ruff
 uv tool install gitingest    # packs a repo into a single LLM-ready text block
 ```
 
-### 5. (Removed) llm conda environment
-
-The Miniconda `llm` env was removed in favor of uv. Its full package list is preserved in `conda-llm-env-backup.txt` in this repo if anything needs reinstalling.
-
-### 6. Configure git
+### 5. Configure git
 
 ```bash
 git config --global user.name "Varun Samtani"
@@ -83,7 +79,7 @@ git config --global user.email "varunsamtani3@gmail.com"
 git config --global credential.helper osxkeychain
 ```
 
-### 7. Set up AI token optimization (rtk)
+### 6. Set up AI token optimization (rtk)
 
 `rtk` is a CLI proxy that filters/summarizes command output before it reaches LLM context (60-90% savings). The opencode plugin at `~/.config/opencode/plugins/rtk.ts` transparently rewrites commands (`git status` -> `rtk git status`) — zero token overhead.
 
@@ -102,15 +98,24 @@ rtk gain              # token savings dashboard
 rtk proxy <cmd>       # run a command without rtk filtering (debugging)
 ```
 
-### 8. Set up GitHub MCP for opencode
+### 7. Set up GitHub MCP for opencode
 
-Already wired in `opencode.jsonc` (disabled by default). To enable, export a token and flip `enabled` to `true`:
+Already wired and enabled in `opencode.jsonc`. The token lives in the macOS keychain (primary) with a gitignored backup file in the repo root (recovery). `bash_profile` resolves it automatically — no plaintext token in any tracked file.
 
 ```bash
-export GITHUB_PERSONAL_ACCESS_TOKEN=<token>   # e.g. in bash_profile
+# 1. Store token in keychain (paste when prompted)
+security add-generic-password -a "$USER" -s opencode-github-pat -w
+
+# 2. Backup copy (gitignored, never committed)
+printf '%s' '<your-token>' > .env.secrets
+
+# 3. Verify
+source ~/.bash_profile
+echo ${#GITHUB_PERSONAL_ACCESS_TOKEN}   # should print token length
+opencode mcp list                        # github server listed
 ```
 
-Verify with `opencode mcp list`.
+To rotate: update both places above; nothing else references the raw value.
 
 ---
 

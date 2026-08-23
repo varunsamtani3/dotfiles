@@ -44,6 +44,8 @@ mlartifacts/
 
 # Secrets / env vars
 .env
+.env.local
+.env.secrets
 .envrc.local
 *.key
 *.pem
