@@ -36,6 +36,7 @@ Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, sim
 
 When editing existing code:
 - Read the file before modifying it. Never edit blind.
+- Don't re-read a file already read this session - reuse prior tool output from context. Only re-read if you edited it since, or need a specific range that grew.
 - Don't "improve" adjacent code, comments, or formatting.
 - Don't refactor things that aren't broken.
 - Don't add docstrings or type annotations to code not being changed.
@@ -96,6 +97,13 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 - **Mid-tier model**: scoped research, code exploration, synthesis, most coding tasks.
 - **Frontier model**: only when real planning, tradeoffs, or multi-step reasoning is genuinely required.
 
+opencode-specific routing:
+- Set `small_model` in `opencode.jsonc` to a cheap model — opencode's hidden internal agents (title generation, summarization, compaction) run on it. Leaving it unset burns your main model on housekeeping.
+- Delegate exploration to subagents (Task tool) instead of searching in the main thread: their context is discarded on return, so only the answer costs tokens in the parent.
+  - `explore` for find/grep/read-only codebase questions
+  - `general` for multi-step research or work units
+- Pin models deliberately: agent and command files accept a `model:` frontmatter field - use it when a task class has a known ceiling instead of relying on self-selection.
+
 Rules for subagents:
 - Cheap-model subagents never spawn further subagents. If one needs to, the task was wrong-sized — return to parent.
 - Max spawn depth: 2 (parent → subagent → one more tier).
@@ -106,6 +114,9 @@ Rules for subagents:
 **Use free/efficient option first.**
 
 - `WebFetch` for public pages — free, text-only, prefer over screenshot-based tools
+- WebFetch returns markdown by default; never fetch raw HTML into context when a markdown/text format exists
+- Reserve browser tools (Playwright, screenshots) for JS-heavy apps, visual verification, or pages that require interaction - not for reading article/docs content
+- If a fetched page returns mostly boilerplate, don't paste it into context - re-fetch as `text`/`markdown` or extract just the relevant section
 - `pdftotext` for PDFs instead of Read when extracting text (lower token cost)
 - When fetching the same source repeatedly, wrap the pattern as a reusable tool
 

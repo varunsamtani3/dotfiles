@@ -48,7 +48,7 @@ eval "$(zoxide init bash)"   # usage: z <partial-dir-name>
 # ─── direnv — Per-project env vars (.envrc files) ─────────────────────────────
 eval "$(direnv hook bash)"
 
-# ─── Starship prompt — git branch, conda env, python version inline ───────────
+# ─── Starship prompt — git branch, python version inline ─────────────────────
 eval "$(starship init bash)"
 
 # ─── bash-completion@2 ────────────────────────────────────────────────────────
