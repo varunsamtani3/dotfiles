@@ -20,6 +20,6 @@ export OPENCODE_DISABLE_CLAUDE_CODE=1
 
 # GitHub PAT for the opencode GitHub MCP: keychain first, gitignored backup file second
 export GITHUB_PERSONAL_ACCESS_TOKEN="$(security find-generic-password -a "$USER" -s opencode-github-pat -w 2>/dev/null)"
-if [[ -z "$GITHUB_PERSONAL_ACCESS_TOKEN" && -f "$HOME/workspace/mac_utils/.env.secrets" ]]; then
-  export GITHUB_PERSONAL_ACCESS_TOKEN="$(cat "$HOME/workspace/mac_utils/.env.secrets")"
+if [[ -z "$GITHUB_PERSONAL_ACCESS_TOKEN" && -f "$HOME/workspace/dotfiles/.env.secrets" ]]; then
+  export GITHUB_PERSONAL_ACCESS_TOKEN="$(cat "$HOME/workspace/dotfiles/.env.secrets")"
 fi

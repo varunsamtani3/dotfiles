@@ -46,8 +46,8 @@ chsh -s /opt/homebrew/bin/bash
 ### 3. Clone and symlink dotfiles
 
 ```bash
-git clone https://github.com/varunsamtani3/dotfiles.git ~/workspace/mac_utils
-cd ~/workspace/mac_utils
+git clone https://github.com/varunsamtani3/dotfiles.git ~/workspace/dotfiles
+cd ~/workspace/dotfiles
 
 ln -s "$PWD/bash_profile" ~/.bash_profile
 ln -s "$PWD/bashrc" ~/.bashrc

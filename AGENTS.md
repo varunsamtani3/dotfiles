@@ -2,7 +2,7 @@
 
 Project-specific instructions for AI coding agents working in this repo. Universal behavioral guidelines are shared globally via `agents-global.md`.
 
-## Project: mac_utils
+## Project: dotfiles
 
 macOS dotfiles and shell config repo. Files edited directly — no symlink manager.
 
