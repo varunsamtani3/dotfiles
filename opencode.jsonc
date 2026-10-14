@@ -1,38 +1,31 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "opencode/x-preview-f-free",
-  "small_model": "opencode/nemotron-3.5-lightning-free",
-  "agent": {
+  "model": "opencode-go/deepseek-v4.1-flash",
+  "agents": {
+    "title": {
+      "model": "opencode/nemotron-3.5-lightning-free"
+    },
     "build": {
-      "variant": "high"
+      "model": "opencode-go/deepseek-v4.1-flash#high"
     },
     "plan": {
-      "variant": "max"
+      "model": "opencode-go/deepseek-v4.1-flash#max"
     }
   },
-  "instructions": [
-    "/Users/varun/.config/opencode/RTK.md"
-  ],
   "mcp": {
-    "github": {
-      "type": "local",
-      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
-      "enabled": true,
-      "environment": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_PERSONAL_ACCESS_TOKEN}"
+    "servers": {
+      "github": {
+        "type": "remote",
+        "url": "https://api.githubcopilot.com/mcp/"
+      },
+      "playwright": {
+        "type": "local",
+        "command": ["npx", "-y", "@playwright/mcp"]
+      },
+      "context7": {
+        "type": "local",
+        "command": ["npx", "-y", "@upstash/context7-mcp"]
       }
-    },
-    "playwright": {
-      "type": "local",
-      "command": ["npx", "-y", "@playwright/mcp"],
-      "enabled": true,
-      "environment": {}
-    },
-    "context7": {
-      "type": "local",
-      "command": ["npx", "-y", "@upstash/context7-mcp"],
-      "enabled": true,
-      "environment": {}
     }
   }
 }

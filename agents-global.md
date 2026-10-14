@@ -149,3 +149,11 @@ When working with the vault, or when the user asks to save/capture/log/research/
 3. Prefer the installed `~/.agents/skills/obsidian-*` skills for vault actions (save, capture, log, decide, research, health, ...).
 4. Treat the AI-first vault rule as non-negotiable for every note written into the vault: `## For future agent` preamble, rich frontmatter (`type`, `date`, `tags`, `ai-first: true`), `[[wikilinks]]` for every person/project/concept, recency markers per external claim, sources verbatim, confidence levels where applicable. Full spec: `~/.agents/skills/obsidian-core/references/ai-first-rules.md`. If unreadable, say so before writing rather than guessing.
 5. Do not write vault notes without following the AI-first spec above; do not strip frontmatter or preambles from existing vault notes.
+
+## 12. RTK - token-optimized shell output
+
+`rtk` is a CLI proxy that filters/summarizes command output before it reaches context (60-90% savings). The OpenCode V2 plugin `~/.config/opencode/plugins/rtk.ts` transparently rewrites shell commands (`git status` -> `rtk git status`), so use plain commands as normal.
+
+- `rtk gain` - show token savings analytics
+- `rtk proxy <cmd>` - run a command without rtk filtering (debugging)
+- Name collision: if `rtk gain` fails, you may have reachingforthejack/rtk (Rust Type Kit) installed instead. See `RTK.md` in the dotfiles repo for the full reference.
